@@ -1,0 +1,22 @@
+.fieldBox {
+  max-height: 400px;
+  width: 100%;
+  background-color: aqua;
+  box-shadow: rgb(79, 79, 79) 4px 4px 4px;
+}
+
+.cell {
+  border: 1px black solid;
+  height: 7rem;
+  width: 33.33%;
+  float: left;
+  box-sizing: border-box;
+}
+
+.cross {
+  background-color: #ff0033;
+}
+
+.zero {
+  background-color: #ffff00;
+}
