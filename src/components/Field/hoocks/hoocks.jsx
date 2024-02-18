@@ -34,11 +34,19 @@ export const handleClick = (
   setCurrentPlayer,
   setIsGameEnded,
   setIsDraw,
+  checkStatusGame,
 ) => {
   const fieldCurrentCell = field[target.id]
   if (fieldCurrentCell === '') {
     field[target.id] = currentPlayer
-    checkWiner(field, setIsGameEnded, currentPlayer, setCurrentPlayer, setIsDraw)
+    checkWiner(
+      field,
+      setIsGameEnded,
+      currentPlayer,
+      setCurrentPlayer,
+      setIsDraw,
+      checkStatusGame,
+    )
   }
 }
 

@@ -3,10 +3,17 @@ import PropTypes from 'prop-types'
 import { Zero, Cross } from './assets/pictures'
 import { paintOnclickCell, handleClick } from './hoocks/hoocks'
 
-export const FieldLayout = (props) => {
+export const FieldLayout = ({
+  field,
+  currentPlayer,
+  setCurrentPlayer,
+  setIsDraw,
+  setIsGameEnded,
+  checkStatusGame,
+}) => {
   return (
     <div className={styles.fieldBox}>
-      {props.field.map((player, index) => {
+      {field.map((player, index) => {
         return (
           <button
             id={index}
@@ -15,11 +22,12 @@ export const FieldLayout = (props) => {
             onClick={(btn) =>
               handleClick(
                 btn,
-                props.field,
-                props.currentPlayer,
-                props.setCurrentPlayer,
-                props.setIsGameEnded,
-                props.setIsDraw,
+                field,
+                currentPlayer,
+                setCurrentPlayer,
+                setIsGameEnded,
+                setIsDraw,
+                checkStatusGame,
               )
             }
           >
@@ -38,4 +46,5 @@ FieldLayout.propTypes = {
   setCurrentPlayer: PropTypes.func,
   setIsDraw: PropTypes.func,
   setIsGameEnded: PropTypes.func,
+  checkStatusGame: PropTypes.func,
 }

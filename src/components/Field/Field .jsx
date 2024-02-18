@@ -8,6 +8,26 @@ export const Field = ({
   setIsDraw,
   setCurrentPlayer,
 }) => {
+  const checkStatusGame = (
+    isWinnerCrosses,
+    isWinnerZeros,
+    isDrawGame,
+    currentPlayer,
+    setIsGameEnded,
+    setIsDraw,
+    setCurrentPlayer,
+  ) => {
+    if (isWinnerCrosses || isWinnerZeros) {
+      setIsGameEnded(true)
+    } else if (isDrawGame) {
+      setIsDraw(true)
+    } else {
+      currentPlayer === 'Крестики'
+        ? setCurrentPlayer('Нолики')
+        : setCurrentPlayer('Крестики')
+    }
+  }
+
   return (
     <>
       <FieldLayout
@@ -16,29 +36,10 @@ export const Field = ({
         setIsGameEnded={setIsGameEnded}
         setIsDraw={setIsDraw}
         setCurrentPlayer={setCurrentPlayer}
+        checkStatusGame={checkStatusGame}
       />
     </>
   )
-}
-
-export const checkStatusGame = (
-  isWinnerCrosses,
-  isWinnerZeros,
-  isDrawGame,
-  currentPlayer,
-  setIsGameEnded,
-  setIsDraw,
-  setCurrentPlayer,
-) => {
-  if (isWinnerCrosses || isWinnerZeros) {
-    setIsGameEnded(true)
-  } else if (isDrawGame) {
-    setIsDraw(true)
-  } else {
-    currentPlayer === 'Крестики'
-      ? setCurrentPlayer('Нолики')
-      : setCurrentPlayer('Крестики')
-  }
 }
 
 Field.propTypes = {
@@ -47,4 +48,5 @@ Field.propTypes = {
   setCurrentPlayer: PropTypes.func,
   setIsDraw: PropTypes.func,
   setIsGameEnded: PropTypes.func,
+  checkStatusGame: PropTypes.func,
 }
