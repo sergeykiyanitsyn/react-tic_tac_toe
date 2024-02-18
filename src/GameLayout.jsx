@@ -16,11 +16,18 @@ export const GameLayout = (props) => {
           />
           <Field
             field={props.field}
+            currentPlayer={props.currentPlayer}
             setIsGameEnded={props.setIsGameEnded}
             setIsDraw={props.setIsDraw}
             setCurrentPlayer={props.setCurrentPlayer}
           />
-          <Restart />
+          <Restart
+            field={props.field}
+            setIsGameEnded={props.setIsGameEnded}
+            setIsDraw={props.setIsDraw}
+            setCurrentPlayer={props.setCurrentPlayer}
+            currentPlayer={props.currentPlayer}
+          />
         </div>
       </div>
     </>
@@ -28,11 +35,11 @@ export const GameLayout = (props) => {
 }
 
 GameLayout.propTypes = {
-  field: PropTypes.object,
+  field: PropTypes.array,
   currentPlayer: PropTypes.string,
-  setCurrentPlayer: PropTypes.bool,
+  setCurrentPlayer: PropTypes.func,
   isDraw: PropTypes.bool,
-  setIsDraw: PropTypes.bool,
+  setIsDraw: PropTypes.func,
   isGameEnded: PropTypes.bool,
-  setIsGameEnded: PropTypes.bool,
+  setIsGameEnded: PropTypes.func,
 }

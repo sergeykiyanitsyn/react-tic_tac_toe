@@ -2,7 +2,6 @@ import { InformationLayout } from './InformationLayout'
 import PropTypes from 'prop-types'
 
 export const Information = (props) => {
-  console.log(props)
   return (
     <>
       <InformationLayout

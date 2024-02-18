@@ -1,22 +1,50 @@
 import { FieldLayout } from './FieldLayout'
 import PropTypes from 'prop-types'
 
-export const Field = (props) => {
+export const Field = ({
+  field,
+  currentPlayer,
+  setIsGameEnded,
+  setIsDraw,
+  setCurrentPlayer,
+}) => {
   return (
     <>
       <FieldLayout
-        field={props.field}
-        setIsGameEnded={props.setIsGameEnded}
-        setIsDraw={props.setIsDraw}
-        setCurrentPlayer={props.setCurrentPlayer}
+        field={field}
+        currentPlayer={currentPlayer}
+        setIsGameEnded={setIsGameEnded}
+        setIsDraw={setIsDraw}
+        setCurrentPlayer={setCurrentPlayer}
       />
     </>
   )
 }
 
+export const checkStatusGame = (
+  isWinnerCrosses,
+  isWinnerZeros,
+  isDrawGame,
+  currentPlayer,
+  setIsGameEnded,
+  setIsDraw,
+  setCurrentPlayer,
+) => {
+  if (isWinnerCrosses || isWinnerZeros) {
+    setIsGameEnded(true)
+  } else if (isDrawGame) {
+    setIsDraw(true)
+  } else {
+    currentPlayer === 'Крестики'
+      ? setCurrentPlayer('Нолики')
+      : setCurrentPlayer('Крестики')
+  }
+}
+
 Field.propTypes = {
-  field: PropTypes.object,
-  setCurrentPlayer: PropTypes.bool,
-  setIsDraw: PropTypes.bool,
-  setIsGameEnded: PropTypes.bool,
+  field: PropTypes.array,
+  currentPlayer: PropTypes.string,
+  setCurrentPlayer: PropTypes.func,
+  setIsDraw: PropTypes.func,
+  setIsGameEnded: PropTypes.func,
 }

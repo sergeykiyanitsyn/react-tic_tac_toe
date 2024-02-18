@@ -1,4 +1,4 @@
-.Info {
+.info {
   font: 900 30px/1 'Source Sans Pro', Arial, sans-serif;
   width: 100%;
   color: #f1f1f1;
@@ -14,10 +14,10 @@
     0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.3);
 }
 
-.Tomato {
+.tomato {
   color: #990033;
 }
 
 .blue {
-  color: blue;
+  color: #000099;
 }

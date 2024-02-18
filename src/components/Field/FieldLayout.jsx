@@ -1,22 +1,30 @@
 import styles from './FieldLayout.module.css'
 import PropTypes from 'prop-types'
-
-const handleClick = ({ target }) => {
-  console.log(target.id)
-}
+import { Zero, Cross } from './assets/pictures'
+import { paintOnclickCell, handleClick } from './hoocks/hoocks'
 
 export const FieldLayout = (props) => {
   return (
     <div className={styles.fieldBox}>
-      {props.field.map((id, index) => {
+      {props.field.map((player, index) => {
         return (
           <button
             id={index}
             key={index}
-            className={styles.cell}
-            onClick={(btn) => handleClick(btn)}
+            className={paintOnclickCell(player)}
+            onClick={(btn) =>
+              handleClick(
+                btn,
+                props.field,
+                props.currentPlayer,
+                props.setCurrentPlayer,
+                props.setIsGameEnded,
+                props.setIsDraw,
+              )
+            }
           >
-            {id}
+            {player === 'Нолики' ? <Zero /> : ''}
+            {player === 'Крестики' ? <Cross /> : ''}
           </button>
         )
       })}
@@ -26,7 +34,8 @@ export const FieldLayout = (props) => {
 
 FieldLayout.propTypes = {
   field: PropTypes.array,
-  setCurrentPlayer: PropTypes.bool,
-  setIsDraw: PropTypes.bool,
-  setIsGameEnded: PropTypes.bool,
+  currentPlayer: PropTypes.string,
+  setCurrentPlayer: PropTypes.func,
+  setIsDraw: PropTypes.func,
+  setIsGameEnded: PropTypes.func,
 }
