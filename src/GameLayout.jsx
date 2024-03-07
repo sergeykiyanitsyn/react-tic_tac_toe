@@ -1,6 +1,6 @@
 import styles from './Game.module.css'
 import { Information } from './components/Infomation/Information'
-import { Field } from './components/Field/Field '
+import { Field } from './components/Field/Field'
 import { Restart } from './components/Restart/Restart'
 import PropTypes from 'prop-types'
 

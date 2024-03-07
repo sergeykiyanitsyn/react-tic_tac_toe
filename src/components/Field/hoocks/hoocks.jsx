@@ -1,6 +1,5 @@
 import styles from '../FieldLayout.module.css'
 import { WIN_PATTERNS } from './Data/statucData'
-import { checkStatusGame } from '../Field '
 
 export const paintOnclickCell = (player) => {
   if (player === 'Нолики') {
@@ -47,6 +46,26 @@ export const handleClick = (
       setIsDraw,
       checkStatusGame,
     )
+  }
+}
+
+const checkStatusGame = (
+  isWinnerCrosses,
+  isWinnerZeros,
+  isDrawGame,
+  currentPlayer,
+  setIsGameEnded,
+  setIsDraw,
+  setCurrentPlayer,
+) => {
+  if (isWinnerCrosses || isWinnerZeros) {
+    setIsGameEnded(true)
+  } else if (isDrawGame) {
+    setIsDraw(true)
+  } else {
+    currentPlayer === 'Крестики'
+      ? setCurrentPlayer('Нолики')
+      : setCurrentPlayer('Крестики')
   }
 }
 

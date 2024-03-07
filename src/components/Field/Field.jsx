@@ -7,27 +7,8 @@ export const Field = ({
   setIsGameEnded,
   setIsDraw,
   setCurrentPlayer,
+  checkStatusGame,
 }) => {
-  const checkStatusGame = (
-    isWinnerCrosses,
-    isWinnerZeros,
-    isDrawGame,
-    currentPlayer,
-    setIsGameEnded,
-    setIsDraw,
-    setCurrentPlayer,
-  ) => {
-    if (isWinnerCrosses || isWinnerZeros) {
-      setIsGameEnded(true)
-    } else if (isDrawGame) {
-      setIsDraw(true)
-    } else {
-      currentPlayer === 'Крестики'
-        ? setCurrentPlayer('Нолики')
-        : setCurrentPlayer('Крестики')
-    }
-  }
-
   return (
     <>
       <FieldLayout
