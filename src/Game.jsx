@@ -1,22 +1,34 @@
-import { GameLayout } from './GameLayout'
-import { useState } from 'react'
-
-let field = ['', '', '', '', '', '', '', '', '']
+import { Field, Information, Restart } from './components'
+import styles from './Game.module.css'
+import { store } from './components/store'
+import { useEffect, useState } from 'react'
+// currentPlayer: true = 'Крестики' | false = 'Нолики'
+// statusGame: true = Win | false = Draw | null = GameContinues
 
 export const Game = () => {
-  const [currentPlayer, setCurrentPlayer] = useState('Крестики')
-  const [isGameEnded, setIsGameEnded] = useState(false)
-  const [isDraw, setIsDraw] = useState(false)
+  const [stateApp, setStateApp] = useState(false)
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      console.log('State Change', store.getState())
+      setStateApp(!stateApp)
+    })
+    return () => {
+      unsubscribe()
+    }
+  }, [stateApp])
+
+  store.dispatch({})
 
   return (
-    <GameLayout
-      field={field}
-      currentPlayer={currentPlayer}
-      setCurrentPlayer={setCurrentPlayer}
-      isGameEnded={isGameEnded}
-      setIsGameEnded={setIsGameEnded}
-      isDraw={isDraw}
-      setIsDraw={setIsDraw}
-    />
+    <>
+      <div className={styles.background}>
+        <div className={styles.gameBoard}>
+          <Information />
+          <Field />
+          <Restart />
+        </div>
+      </div>
+    </>
   )
 }

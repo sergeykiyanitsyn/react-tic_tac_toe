@@ -1,42 +1,43 @@
-import styles from '../InformationLayout.module.css'
+import { WIN_PATTERNS } from '../Data/statusData'
+import { store } from '../../store'
 
-const showWinner = (currentPlayer) => {
-  let stylesPlayer = ''
-  if (currentPlayer === 'Крестики') {
-    stylesPlayer = styles.tomato
+const checkStatusGame = (isWinnerCrosses, isWinnerZeros, isDraw) => {
+  if (isWinnerCrosses || isWinnerZeros) {
+    return true
+  } else if (isDraw) {
+    return false
   } else {
-    stylesPlayer = styles.blue
+    return null
   }
-
-  return (
-    <div className={styles.info}>
-      {' '}
-      Победитель: <span className={stylesPlayer}> {currentPlayer}</span>{' '}
-    </div>
-  )
 }
 
-const showCurrentPlayer = (currentPlayer) => {
-  let stylesPlayer = ''
-  if (currentPlayer === 'Крестики') {
-    stylesPlayer = styles.tomato
-  } else {
-    stylesPlayer = styles.blue
-  }
+export const checkWiner = () => {
+  const { field } = store.getState()
 
-  return (
-    <div className={styles.info}>
-      Итак, сейчас ходят: <span className={stylesPlayer}> {currentPlayer}</span>{' '}
-    </div>
-  )
+  const indexesCrosses = findAllIndexec(field, true)
+  const indexesZeros = findAllIndexec(field, false)
+
+  const isWinnerCrosses = findWinner(WIN_PATTERNS, indexesCrosses)
+  const isWinnerZeros = findWinner(WIN_PATTERNS, indexesZeros)
+
+  const isDraw = !field.includes('')
+
+  const statusGame = checkStatusGame(isWinnerCrosses, isWinnerZeros, isDraw)
+
+  return statusGame
 }
 
-export const showStatusGame = ({ isDraw, isGameEnded, currentPlayer }) => {
-  if (isDraw) {
-    return <div className={styles.info}> Ничья </div>
-  } else if (isGameEnded) {
-    return <>{showWinner(currentPlayer)}</>
-  } else {
-    return <>{showCurrentPlayer(currentPlayer)}</>
-  }
+export const findAllIndexec = (field, currentPlayer) => {
+  return field.reduce((acc, player, index) => {
+    if (player === currentPlayer) {
+      acc.push(index)
+    }
+    return acc
+  }, [])
+}
+
+export const findWinner = (WIN_PATTERNS, indexesPlayer) => {
+  return WIN_PATTERNS.some((winSet) =>
+    winSet.every((winNum) => indexesPlayer.includes(winNum)),
+  )
 }

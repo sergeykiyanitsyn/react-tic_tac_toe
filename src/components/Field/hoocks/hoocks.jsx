@@ -1,96 +1,33 @@
 import styles from '../FieldLayout.module.css'
-import { WIN_PATTERNS } from './Data/statucData'
+import { store } from '../../store'
 
 export const paintOnclickCell = (player) => {
-  if (player === 'Нолики') {
-    return `${styles.cell} ${styles.zero}`
-  } else if (player === 'Крестики') {
-    return `${styles.cell} ${styles.cross}`
-  } else {
-    return styles.cell
+  switch (player) {
+    case false:
+      return `${styles.cell} ${styles.zero}`
+    case true:
+      return `${styles.cell} ${styles.cross}`
+    default:
+      return styles.cell
   }
 }
 
-export const findAllIndexec = (field, currentPlayer) => {
-  return field.reduce((acc, player, index) => {
-    if (player === currentPlayer) {
-      acc.push(index)
-    }
-    return acc
-  }, [])
-}
+export const handleClick = (btn) => {
+  const { target } = btn
+  const { field, currentPlayer } = store.getState()
 
-export const findWinner = (WIN_PATTERNS, indexesPlayer) => {
-  return WIN_PATTERNS.some((winSet) =>
-    winSet.every((winNum) => indexesPlayer.includes(winNum)),
-  )
-}
+  const newField = [...field]
+  const fieldCurrentCell = newField[target.id]
 
-export const handleClick = (
-  { target },
-  field,
-  currentPlayer,
-  setCurrentPlayer,
-  setIsGameEnded,
-  setIsDraw,
-  checkStatusGame,
-) => {
-  const fieldCurrentCell = field[target.id]
   if (fieldCurrentCell === '') {
-    field[target.id] = currentPlayer
-    checkWiner(
-      field,
-      setIsGameEnded,
-      currentPlayer,
-      setCurrentPlayer,
-      setIsDraw,
-      checkStatusGame,
-    )
+    newField[target.id] = currentPlayer
+    // console.log(newField)
+    // const unsubscribePaintCell = store.subscribe(() => {
+    //   console.log('State PAINT_CELL', store.getState())
+    // })
+    store.dispatch({ type: 'PAINT_CELL', payload: newField })
+    // unsubscribePaintCell()
+
+    store.dispatch({ type: 'CHANGE_PLAYER', payload: !currentPlayer })
   }
-}
-
-const checkStatusGame = (
-  isWinnerCrosses,
-  isWinnerZeros,
-  isDrawGame,
-  currentPlayer,
-  setIsGameEnded,
-  setIsDraw,
-  setCurrentPlayer,
-) => {
-  if (isWinnerCrosses || isWinnerZeros) {
-    setIsGameEnded(true)
-  } else if (isDrawGame) {
-    setIsDraw(true)
-  } else {
-    currentPlayer === 'Крестики'
-      ? setCurrentPlayer('Нолики')
-      : setCurrentPlayer('Крестики')
-  }
-}
-
-const checkWiner = (
-  field,
-  setIsGameEnded,
-  currentPlayer,
-  setCurrentPlayer,
-  setIsDraw,
-) => {
-  const indexesCrosses = findAllIndexec(field, 'Крестики')
-  const indexesZeros = findAllIndexec(field, 'Нолики')
-
-  const isWinnerCrosses = findWinner(WIN_PATTERNS, indexesCrosses)
-  const isWinnerZeros = findWinner(WIN_PATTERNS, indexesZeros)
-
-  const isDrawGame = !field.includes('')
-
-  checkStatusGame(
-    isWinnerCrosses,
-    isWinnerZeros,
-    isDrawGame,
-    currentPlayer,
-    setIsGameEnded,
-    setIsDraw,
-    setCurrentPlayer,
-  )
 }

@@ -1,43 +1,24 @@
-import { RestartLayout } from './RestartLayout'
 import PropTypes from 'prop-types'
+import styles from './RestartLayout.module.css'
+import { store } from '../store'
 
-const restart = (field, setIsGameEnded, setIsDraw, setCurrentPlayer, currentPlayer) => {
-  const nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-  nums.map((num, index) => {
-    field[index] = ''
-  })
-  if (currentPlayer === 'Нолики') {
-    setCurrentPlayer('Крестики')
-  } else {
-    setCurrentPlayer('Нолики')
-  }
-  setIsGameEnded(false)
-  setIsDraw(false)
+const restart = () => {
+  store.dispatch({ type: 'RESTART' })
 }
 
-export const Restart = ({
-  field,
-  setIsGameEnded,
-  setIsDraw,
-  setCurrentPlayer,
-  currentPlayer,
-}) => {
+export const Restart = () => {
   return (
-    <RestartLayout
-      field={field}
-      setIsGameEnded={setIsGameEnded}
-      setIsDraw={setIsDraw}
-      setCurrentPlayer={setCurrentPlayer}
-      currentPlayer={currentPlayer}
-      restart={restart}
-    />
+    <>
+      <button className={styles.restart} onClick={restart}>
+        {' '}
+        Начать заново{' '}
+      </button>
+    </>
   )
 }
 
 Restart.propTypes = {
   field: PropTypes.array,
   setCurrentPlayer: PropTypes.func,
-  setIsDraw: PropTypes.func,
-  setIsGameEnded: PropTypes.func,
-  currentPlayer: PropTypes.string,
+  setStatusGame: PropTypes.func,
 }
