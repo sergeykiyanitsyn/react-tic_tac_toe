@@ -20,7 +20,7 @@ export const appReducer = (state = initialState, action) => {
       return { ...state, field: payload }
 
     case 'CHANGE_PLAYER':
-      return { ...state, currentPlayer: payload }
+      return { ...state, currentPlayer: !payload }
 
     case 'CHANGE_STATUS_GAME':
       return { ...state, statusGame: payload }

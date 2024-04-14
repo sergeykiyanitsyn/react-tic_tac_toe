@@ -1,9 +1,7 @@
-import { Field, Information, Restart } from './components'
+import { Field, Info } from './components'
 import styles from './Game.module.css'
 import { store } from './components/store'
 import { useEffect, useState } from 'react'
-// currentPlayer: true = 'Крестики' | false = 'Нолики'
-// statusGame: true = Win | false = Draw | null = GameContinues
 
 export const Game = () => {
   const [stateApp, setStateApp] = useState(false)
@@ -11,6 +9,7 @@ export const Game = () => {
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       console.log('State Change', store.getState())
+      console.log(stateApp)
       setStateApp(!stateApp)
     })
     return () => {
@@ -18,15 +17,19 @@ export const Game = () => {
     }
   }, [stateApp])
 
-  store.dispatch({})
+  const restart = () => {
+    store.dispatch({ type: 'RESTART' })
+  }
 
   return (
     <>
       <div className={styles.background}>
         <div className={styles.gameBoard}>
-          <Information />
+          <Info />
           <Field />
-          <Restart />
+          <button className={styles.restart} onClick={restart}>
+            Начать заново
+          </button>
         </div>
       </div>
     </>
