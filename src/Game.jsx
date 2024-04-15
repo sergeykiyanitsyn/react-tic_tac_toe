@@ -1,6 +1,6 @@
 import { Field, Info } from './components'
 import styles from './Game.module.css'
-import { store } from './components/store'
+import { store } from './store'
 import { useEffect, useState } from 'react'
 
 export const Game = () => {

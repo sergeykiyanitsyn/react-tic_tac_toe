@@ -1,21 +1,17 @@
+import xPic from './assets/X.png'
+import oPic from './assets/O.png'
+import { store } from '../../store'
 import styles from './Field.module.css'
-import { PUCTURE_O, PICTURE_X } from './assets/assetsLinks'
-import { store } from '../store'
 
 // currentPlayer: true = 'Крестики' | false = 'Нолики'
 
 const handleClick = (btn) => {
   const { target } = btn
+  if (target.children.length || target.tagName === 'IMG') return
   const { field, currentPlayer } = store.getState()
-
-  const newField = [...field]
-  const fieldCurrentCell = newField[target.id]
-
-  if (fieldCurrentCell === '') {
-    newField[target.id] = currentPlayer
-    store.dispatch({ type: 'PAINT_CELL', payload: newField })
-    store.dispatch({ type: 'CHANGE_PLAYER', payload: currentPlayer })
-  }
+  field[target.id] = currentPlayer
+  store.dispatch({ type: 'PAINT_CELL', payload: [...field] })
+  store.dispatch({ type: 'CHANGE_PLAYER', payload: currentPlayer })
 }
 
 export const Field = () => {
@@ -23,6 +19,7 @@ export const Field = () => {
   return (
     <div className={styles.fieldBox}>
       {field.map((player, indx) => {
+        const currPic = player ? xPic : oPic
         return (
           <button
             disabled={statusGame !== null}
@@ -33,12 +30,9 @@ export const Field = () => {
             }`}
             onClick={(btn) => handleClick(btn)}
           >
-            {player !== '' &&
-              (player ? (
-                <img src={PICTURE_X} alt="cross" width={100} />
-              ) : (
-                <img src={PUCTURE_O} alt="zero" width={50} />
-              ))}
+            {player !== '' && player !== '' && (
+              <img src={currPic} alt="cross" width={player ? 100 : 50} />
+            )}
           </button>
         )
       })}

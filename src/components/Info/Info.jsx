@@ -1,6 +1,6 @@
-import { findAllIndexec, findWinner, checkStatusGame } from './utils/utils'
-import { WIN_PATTERNS } from './consts/WIN_PATTERNS'
-import { store } from '../store'
+import { checkStatusGame } from '../../utils/utils'
+import { WIN_PATTERNS } from '../../consts/consts'
+import { store } from '../../store'
 import styles from './Info.module.css'
 
 // currentPlayer: true = 'Крестики' | false = 'Нолики'
@@ -8,20 +8,15 @@ import styles from './Info.module.css'
 export const Info = () => {
   const { field, statusGame, currentPlayer } = store.getState()
 
-  const indexesCrosses = findAllIndexec(field, true)
-  const indexesZeros = findAllIndexec(field, false)
-
-  const isWinnerCrosses = findWinner(WIN_PATTERNS, indexesCrosses)
-  const isWinnerZeros = findWinner(WIN_PATTERNS, indexesZeros)
-
-  const isDraw = !field.includes('')
-
   // isGameOver: true = Win | false = Draw | null = GameContinues
-  const isGameOver = checkStatusGame(isWinnerCrosses, isWinnerZeros, isDraw)
+  const isGameOver = checkStatusGame(WIN_PATTERNS, field, !currentPlayer)
 
-  if (statusGame !== isGameOver) {
+  if (isGameOver !== null) {
     store.dispatch({ type: 'CHANGE_STATUS_GAME', payload: isGameOver })
   }
+
+  console.log('isGameOver', isGameOver)
+  console.log('statusGame', statusGame)
 
   return (
     <div className={styles.info}>
